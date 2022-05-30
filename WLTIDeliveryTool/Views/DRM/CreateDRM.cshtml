@@ -1,0 +1,223 @@
+﻿
+@model WLTIDeliveryTool.ViewModel.DRMViewModel
+@using WLTIDeliveryTool.Helper
+
+@{
+    ViewBag.Title = "create";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+
+
+}
+@section style{
+    <link href="~/Content/date-time-picker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <style>
+
+        .field-validation-error {
+            color: red !important;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .input-validation-error {
+            border: solid 1px #d1d3e2 !important;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dispatch Requisition</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 m-auto">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Dispatch Requisition</h6>
+                </div>
+                <form class="form" id="frmCreateDRM" method="post" action="">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-md-3 col-xs-12">
+                                <label>DR#</label>
+                                @Html.TextBoxFor(m => m.DeliveryReceiptNumber, null, new { @class = "form-control", @placeholder = "Enter DR number" })
+                                @Html.ValidationMessageFor(m => m.DeliveryReceiptNumber, null, new { @style = "color:red;" })
+
+                            </div>
+
+                            <div class="col-md-6 col-xs-12">
+                                <label>Client Name</label>
+                                @Html.DropDownListFor(m => m.ClientId, SelectListHelper.Client(), new { @class = "form-control custom-select" })
+                                @Html.ValidationMessageFor(m => m.ClientId, null, new { @style = "color:red;" })
+
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label>Date</label>
+                                @Html.TextBoxFor(m => m.DrmDate, "{0:MM-dd-yyyy}", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ClientId, null, new { @style = "color:red;" })
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-3 col-xs-12">
+                                <label>Requested By</label>
+                                @Html.DropDownListFor(m => m.CseId, SelectListHelper.CSE(), new { @class = "form-control custom-select" })
+                                @Html.ValidationMessageFor(m => m.CseId, null, new { @style = "color:red;" })
+
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <label>Mode of Delivery</label>
+                                @Html.DropDownListFor(m => m.ModId, SelectListHelper.ModeOfDelivery(), new { @class = "form-control custom-select" })
+                                @Html.ValidationMessageFor(m => m.ModId, null, new { @style = "color:red;" })
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label>Courier</label>
+                                @Html.DropDownListFor(m => m.DeliveryOptionId, SelectListHelper.DeliveryOption(0), new { @class = "form-control custom-select" })
+                                @Html.ValidationMessageFor(m => m.DeliveryOptionId, null, new { @style = "color:red;" })
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 col-xs-12">
+                                <label>Released</label>
+                                @Html.DropDownListFor(m => m.ConfirmedShipment, SelectListHelper.DeliveryStatus(), new { @class = "form-control custom-select" })
+                                @Html.ValidationMessageFor(m => m.ConfirmedShipment, null, new { @style = "color:red;" })
+                            </div>
+
+                            <div class="col-md-6 col-xs-12 ">
+                                <label>Received</label>
+                                @Html.DropDownListFor(m => m.Releasing, SelectListHelper.DeliveryStatus(), new { @class = "form-control custom-select" })
+                                @Html.ValidationMessageFor(m => m.Releasing, null, new { @style = "color:red;" })
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="card-footer">
+                        <button id="btnSave" onclick="CreateDRM()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+                        <a style="padding:5px 30px 5px 10px;" href="/home/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/date-time-picker/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/button-loader.js"></script>
+    <script>
+        let btn = new ButtonLoader('btnSave');
+        $(document).ready(function () {
+            $('#DrmDate').datetimepicker({
+                widgetPositioning: {
+                    horizontal: 'auto',
+                    vertical: 'bottom'
+                },
+                format: 'MM/DD/YYYY',
+
+            });
+
+            $('select[name="ModId"]').change(function () {
+
+                let modId = $('select[name="ModId"]>option:selected').val();
+                $('select[name="DeliveryOptionId"]').empty();
+                if (modId !== '') {
+                    getDeliveryOptions(modId);
+                } else {
+                    $('select[name="DeliveryOptionId"]').append('<option  ,selected="true" value="">Please select an option</option>');
+                }
+
+            });
+        });
+        function CreateDRM() {
+            event.preventDefault();
+            let form = $('#frmCreateDRM');
+
+
+            if (form.valid()) {
+
+                let model = {
+
+                    DeliveryReceiptNumber: $('input[name="DeliveryReceiptNumber"]').val(),
+                    ClientId: $('select[name="ClientId"]>option:selected').val(),
+                    CseId: $('select[name="CseId"]>option:selected').val(),
+                    ModId: $('select[name="ModId"]>option:selected').val(),
+                    ConfirmedShipment: $('select[name="ConfirmedShipment"]>option:selected').val(),
+                    Invoicing: $('select[name="Invoicing"]>option:selected').val(),
+                    Releasing: $('select[name="Releasing"]>option:selected').val(),
+                    DrmDate: new Date($('input[name="DrmDate"]').val()),
+
+                    DeliveryOptionId: $('select[name="DeliveryOptionId"]>option:selected').val()
+                };
+
+                Save(model);
+            }
+
+        }
+        let Save = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/drm/savedrm',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+                    btn.Processing();
+                }
+
+            }).done(function (data) {
+                
+                btn.Completed();
+                setTimeout(function () { alert(data.message); }, 1000);
+                setTimeout(function () { window.location = location.origin + '/Home/index'; }, 1500);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+
+        let getDeliveryOptions = function (modId) {
+            id = {
+                modId: modId
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/drm/deliveryOptionList',
+                data: JSON.stringify(id),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+            }).done(function (data) {
+
+                $.each(data.data, function (index, item) {
+                    if (item.Value === "") {
+                        $('select[name="DeliveryOptionId"]').append('<option  ,selected="true" value=' + item.Value + '>' + item.Text + '</option>');
+                    } else {
+                        $('select[name="DeliveryOptionId"]').append('<option value=' + item.Value + '>' + item.Text + '</option>');
+                    }
+                });
+
+            });
+        };
+    </script>
+}

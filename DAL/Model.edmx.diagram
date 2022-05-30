@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bf82f32531f34252a27b0063e1c2aa16" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.ChannelSalesExecutive" Width="1.5" PointX="3.875" PointY="4.125" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.DeliveryStatus" Width="1.5" PointX="6" PointY="4.125" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.Client" Width="1.5" PointX="6.375" PointY="0.75" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.DrmProgress" Width="1.5" PointX="6.375" PointY="8.375" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.DeliveryProgress" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.DeliveryOption" Width="1.5" PointX="3.5" PointY="14.25" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.EstimatedDelivery" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DeliveryOption_EstimatedDelivery" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.ModeOfDelivery" Width="1.5" PointX="1.25" PointY="12.5" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DeliveryOption_ModeOfDelivery" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.Attachment" Width="1.5" PointX="6.25" PointY="11.75" />
+        <EntityTypeShape EntityType="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Width="1.5" PointX="8.625" PointY="6.25" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_Attachment_DispatchRequisitionMonitoring" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ChannelSalesExecutive" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_Client" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryOption" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus1" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ModeOfDelivery" />
+        <AssociationConnector Association="WLTIDeliveryToolsModel.FK_DrmProgress_DispatchRequisitionMonitoring" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

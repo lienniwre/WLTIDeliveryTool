@@ -1,0 +1,346 @@
+﻿
+@model DAL.ModeOfDelivery
+@using WLTIDeliveryTool.Helper
+
+@{
+    ViewBag.Title = "create";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+
+
+}
+@section style{
+    <link href="~/Content/date-time-picker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <script src="~/Scripts/date-utilities.js"></script>
+    <script src="~/Scripts/button-loader.js"></script>
+    <style>
+
+        .field-validation-error {
+            color: red !important;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .input-validation-error {
+            border: solid 1px #d1d3e2 !important;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        table > tbody > tr:hover {
+            cursor: pointer;
+        }
+
+        table > tbody > tr > td:not(:first-child):not(:last-child) {
+            font-size: .85em;
+            white-space: nowrap;
+            min-width: 300px;
+        }
+
+        table > thead > tr > th:nth-child(2) {
+            min-width: 800px !important;
+        }
+
+        table > tbody > tr > td:last-child {
+            text-align: center;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Mode of Delivery</h1>
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-12 m-auto">
+            <div class="card shadow mb-4">
+                <div class="card-header float-left">
+                    <h6 class="m-0 font-weight-bold text-primary float-left">Mode of Delivery</h6>
+                    <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modalProgress"><i class="fa fa-plus text-white"></i></button>
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="table table-responsive" style="width:100%;">
+                        <table id="tblProgress" class="dataTable display-compact table-responsive" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Definition</th>
+
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Definition</td>
+
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create new mode of delivery</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 m-auto">
+
+                    <form class="form" id="frmCreateProgress" method="post" action="">
+
+                        <div class="row mb-2">
+                            <div class="col-md-12 col-xs-12">
+                                <label>Definition</label>
+                                @Html.TextBoxFor(m => m.Definition, null, new { @class = "form-control", @placeholder = "Enter mode of delivery" })
+
+                                @Html.ValidationMessageFor(m => m.Definition, null, new { @style = "color:red;" })
+
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSave" onclick="CreateModeOfDelivery()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalUpdateProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Mode Of Delivery</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 m-auto">
+
+                    <form class="form" id="frmUpdateProgress" method="post" action="">
+
+                        <div class="row mb-2">
+                            <div class="col-md-12 col-xs-12">
+                                <label>Definition</label>
+                                @Html.EditorFor(m => m.Definition, new { @htmlAttributes = new { @class = "form-control", @placeholder = "Enter Client Name" } })
+
+                                @Html.ValidationMessageFor(m => m.Definition, null, new { @style = "color:red;" })
+                                @Html.HiddenFor(m => m.ModId)
+
+
+                            </div>
+
+                        </div>
+
+
+
+
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnUpdate" onclick="SaveUpdate()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/date-time-picker/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/sb-admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/date-utilities.js"></script>
+    <script src="~/Scripts/button-loader.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblProgress').DataTable({
+                "ajax": {
+                    "url": "/modeofdelivery/displaytable",
+                    "type": "POST",
+                    "dataType": "json"
+                },
+                "columns": [{ "data": "ModId", "name": "ModId" },
+                { "data": "Definition", "name": "Definition" },
+
+                {
+                    "data": "ModId", "render": function (data) {
+                        return "<button onclick='Update(" + data + ")' class='btn btn-light btn-sm'><i class='fa fa-pen'></i></button> "
+
+                    },
+                    "orderable": false,
+                    "width": "100px"
+                }
+
+                ],
+
+                "serverSide": true,
+                "processing": true,
+                "language": { "emptyTable": "No data found, Please click on <b>Add New</b> Button." }
+
+            });
+
+
+
+        });
+        function CreateModeOfDelivery() {
+            event.preventDefault();
+            let form = $('#frmCreateProgress');
+
+            if (form.valid()) {
+
+                let model = {
+
+                    Definition: $('input[name="Definition"]').val(),
+
+                }
+
+                Save(model);
+
+            } else {
+
+            }
+
+        }
+        let btn = new ButtonLoader('btnSave');
+        let Save = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/modeofdelivery/savemodeofdelivery',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+                    btn.Completed();
+                }
+
+            }).done(function (data) {
+                btn.Completed();
+                setTimeout(function () { alert(data.message); }, 1000);
+                setTimeout(function () { window.location = location.origin + '/home/index'; }, 1500);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+
+        function Update(progressId) {
+
+            let model = { id: progressId };
+
+            GetProgressById(model);
+        }
+
+        function SaveUpdate() {
+            event.preventDefault();
+            let form = $('#frmUpdateProgress');
+
+            if (form.valid()) {
+
+                let model = {
+                    ModId: $('input[name="ModId"]').val(),
+                    Definition: $('#frmUpdateProgress input[name="Definition"]').val(),
+                };
+
+                SaveChanges(model);
+
+            } else {
+
+            }
+
+        }
+
+        function GetProgressById(model) {
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/modeofdelivery/getmodeofdelivery',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+
+            }).done(function (data) {
+                $('#frmUpdateProgress input[name="Definition"]').val(data.data.Definition);
+
+                $('input[name="ModId"]').val(data.data.ModId);
+                $('#modalUpdateProgress').modal('show');
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        }
+
+        let btnUpdate = new ButtonLoader('btnUpdate');
+
+        let SaveChanges = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/modeofdelivery/savechangestomodeofdelivery',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+                    btnUpdate.Processing();
+                }
+
+            }).done(function (data) {
+                btnUpdate.Completed();
+                btnUpdate.Default();
+                setTimeout(function () { alert(data.message); }, 1500);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+    </script>
+}

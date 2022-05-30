@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0E253F7C-B692-4162-BE3E-18DDA98A138C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\WLTIDeliveryTool\bin\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Json.Net, Version=1.0.33.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json.Net.1.0.33\lib\netstandard2.0\Json.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Vse.Web.Serialization, Version=1.0.4.0, Culture=neutral, PublicKeyToken=fb838febb49f46b2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vse.Web.Serialization.ControlledSerializationJsonConverter.1.0.4\lib\net45\Vse.Web.Serialization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attachment.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ChannelSalesExecutive.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryOption.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryProgress.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryStatus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DispatchRequisitionMonitoring.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DrmProgress.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EstimatedDelivery.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Metadata.cs" />
+    <Compile Include="Models\PartialClass.cs" />
+    <Compile Include="ModeOfDelivery.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="bin\Debug\DAL.dll.config" />
+    <None Include="bin\Release\DAL.dll.config" />
+    <None Include="Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\DAL.dll" />
+    <Content Include="bin\Debug\DAL.pdb" />
+    <Content Include="bin\Debug\Elmah.dll" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\Json.Net.dll" />
+    <Content Include="bin\Debug\Microsoft.Win32.Primitives.dll" />
+    <Content Include="bin\Debug\netstandard.dll" />
+    <Content Include="bin\Debug\System.AppContext.dll" />
+    <Content Include="bin\Debug\System.Collections.Concurrent.dll" />
+    <Content Include="bin\Debug\System.Collections.dll" />
+    <Content Include="bin\Debug\System.Collections.NonGeneric.dll" />
+    <Content Include="bin\Debug\System.Collections.Specialized.dll" />
+    <Content Include="bin\Debug\System.ComponentModel.dll" />
+    <Content Include="bin\Debug\System.ComponentModel.EventBasedAsync.dll" />
+    <Content Include="bin\Debug\System.ComponentModel.Primitives.dll" />
+    <Content Include="bin\Debug\System.ComponentModel.TypeConverter.dll" />
+    <Content Include="bin\Debug\System.Console.dll" />
+    <Content Include="bin\Debug\System.Data.Common.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.Contracts.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.Debug.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.Process.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.StackTrace.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.TextWriterTraceListener.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.Tools.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.TraceSource.dll" />
+    <Content Include="bin\Debug\System.Diagnostics.Tracing.dll" />
+    <Content Include="bin\Debug\System.Drawing.Primitives.dll" />
+    <Content Include="bin\Debug\System.Dynamic.Runtime.dll" />
+    <Content Include="bin\Debug\System.Globalization.Calendars.dll" />
+    <Content Include="bin\Debug\System.Globalization.dll" />
+    <Content Include="bin\Debug\System.Globalization.Extensions.dll" />
+    <Content Include="bin\Debug\System.IO.Compression.dll" />
+    <Content Include="bin\Debug\System.IO.Compression.ZipFile.dll" />
+    <Content Include="bin\Debug\System.IO.dll" />
+    <Content Include="bin\Debug\System.IO.FileSystem.dll" />
+    <Content Include="bin\Debug\System.IO.FileSystem.DriveInfo.dll" />
+    <Content Include="bin\Debug\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\Debug\System.IO.FileSystem.Watcher.dll" />
+    <Content Include="bin\Debug\System.IO.IsolatedStorage.dll" />
+    <Content Include="bin\Debug\System.IO.MemoryMappedFiles.dll" />
+    <Content Include="bin\Debug\System.IO.Pipes.dll" />
+    <Content Include="bin\Debug\System.IO.UnmanagedMemoryStream.dll" />
+    <Content Include="bin\Debug\System.Linq.dll" />
+    <Content Include="bin\Debug\System.Linq.Expressions.dll" />
+    <Content Include="bin\Debug\System.Linq.Parallel.dll" />
+    <Content Include="bin\Debug\System.Linq.Queryable.dll" />
+    <Content Include="bin\Debug\System.Net.Http.dll" />
+    <Content Include="bin\Debug\System.Net.NameResolution.dll" />
+    <Content Include="bin\Debug\System.Net.NetworkInformation.dll" />
+    <Content Include="bin\Debug\System.Net.Ping.dll" />
+    <Content Include="bin\Debug\System.Net.Primitives.dll" />
+    <Content Include="bin\Debug\System.Net.Requests.dll" />
+    <Content Include="bin\Debug\System.Net.Security.dll" />
+    <Content Include="bin\Debug\System.Net.Sockets.dll" />
+    <Content Include="bin\Debug\System.Net.WebHeaderCollection.dll" />
+    <Content Include="bin\Debug\System.Net.WebSockets.Client.dll" />
+    <Content Include="bin\Debug\System.Net.WebSockets.dll" />
+    <Content Include="bin\Debug\System.ObjectModel.dll" />
+    <Content Include="bin\Debug\System.Reflection.dll" />
+    <Content Include="bin\Debug\System.Reflection.Extensions.dll" />
+    <Content Include="bin\Debug\System.Reflection.Primitives.dll" />
+    <Content Include="bin\Debug\System.Resources.Reader.dll" />
+    <Content Include="bin\Debug\System.Resources.ResourceManager.dll" />
+    <Content Include="bin\Debug\System.Resources.Writer.dll" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.VisualC.dll" />
+    <Content Include="bin\Debug\System.Runtime.dll" />
+    <Content Include="bin\Debug\System.Runtime.Extensions.dll" />
+    <Content Include="bin\Debug\System.Runtime.Handles.dll" />
+    <Content Include="bin\Debug\System.Runtime.InteropServices.dll" />
+    <Content Include="bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="bin\Debug\System.Runtime.Numerics.dll" />
+    <Content Include="bin\Debug\System.Runtime.Serialization.Formatters.dll" />
+    <Content Include="bin\Debug\System.Runtime.Serialization.Json.dll" />
+    <Content Include="bin\Debug\System.Runtime.Serialization.Primitives.dll" />
+    <Content Include="bin\Debug\System.Runtime.Serialization.Xml.dll" />
+    <Content Include="bin\Debug\System.Security.Claims.dll" />
+    <Content Include="bin\Debug\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\Debug\System.Security.Cryptography.Csp.dll" />
+    <Content Include="bin\Debug\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\Debug\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\Debug\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="bin\Debug\System.Security.Principal.dll" />
+    <Content Include="bin\Debug\System.Security.SecureString.dll" />
+    <Content Include="bin\Debug\System.Text.Encoding.dll" />
+    <Content Include="bin\Debug\System.Text.Encoding.Extensions.dll" />
+    <Content Include="bin\Debug\System.Text.RegularExpressions.dll" />
+    <Content Include="bin\Debug\System.Threading.dll" />
+    <Content Include="bin\Debug\System.Threading.Overlapped.dll" />
+    <Content Include="bin\Debug\System.Threading.Tasks.dll" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Parallel.dll" />
+    <Content Include="bin\Debug\System.Threading.Thread.dll" />
+    <Content Include="bin\Debug\System.Threading.ThreadPool.dll" />
+    <Content Include="bin\Debug\System.Threading.Timer.dll" />
+    <Content Include="bin\Debug\System.ValueTuple.dll" />
+    <Content Include="bin\Debug\System.Xml.ReaderWriter.dll" />
+    <Content Include="bin\Debug\System.Xml.XDocument.dll" />
+    <Content Include="bin\Debug\System.Xml.XmlDocument.dll" />
+    <Content Include="bin\Debug\System.Xml.XmlSerializer.dll" />
+    <Content Include="bin\Debug\System.Xml.XPath.dll" />
+    <Content Include="bin\Debug\System.Xml.XPath.XDocument.dll" />
+    <Content Include="bin\Debug\Vse.Web.Serialization.dll" />
+    <Content Include="bin\Debug\Vse.Web.Serialization.pdb" />
+    <Content Include="bin\Release\DAL.dll" />
+    <Content Include="bin\Release\DAL.pdb" />
+    <Content Include="bin\Release\Elmah.dll" />
+    <Content Include="bin\Release\EntityFramework.dll" />
+    <Content Include="bin\Release\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Release\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Release\EntityFramework.xml" />
+    <Content Include="bin\Release\Json.Net.dll" />
+    <Content Include="bin\Release\Microsoft.Win32.Primitives.dll" />
+    <Content Include="bin\Release\netstandard.dll" />
+    <Content Include="bin\Release\System.AppContext.dll" />
+    <Content Include="bin\Release\System.Collections.Concurrent.dll" />
+    <Content Include="bin\Release\System.Collections.dll" />
+    <Content Include="bin\Release\System.Collections.NonGeneric.dll" />
+    <Content Include="bin\Release\System.Collections.Specialized.dll" />
+    <Content Include="bin\Release\System.ComponentModel.dll" />
+    <Content Include="bin\Release\System.ComponentModel.EventBasedAsync.dll" />
+    <Content Include="bin\Release\System.ComponentModel.Primitives.dll" />
+    <Content Include="bin\Release\System.ComponentModel.TypeConverter.dll" />
+    <Content Include="bin\Release\System.Console.dll" />
+    <Content Include="bin\Release\System.Data.Common.dll" />
+    <Content Include="bin\Release\System.Diagnostics.Contracts.dll" />
+    <Content Include="bin\Release\System.Diagnostics.Debug.dll" />
+    <Content Include="bin\Release\System.Diagnostics.FileVersionInfo.dll" />
+    <Content Include="bin\Release\System.Diagnostics.Process.dll" />
+    <Content Include="bin\Release\System.Diagnostics.StackTrace.dll" />
+    <Content Include="bin\Release\System.Diagnostics.TextWriterTraceListener.dll" />
+    <Content Include="bin\Release\System.Diagnostics.Tools.dll" />
+    <Content Include="bin\Release\System.Diagnostics.TraceSource.dll" />
+    <Content Include="bin\Release\System.Diagnostics.Tracing.dll" />
+    <Content Include="bin\Release\System.Drawing.Primitives.dll" />
+    <Content Include="bin\Release\System.Dynamic.Runtime.dll" />
+    <Content Include="bin\Release\System.Globalization.Calendars.dll" />
+    <Content Include="bin\Release\System.Globalization.dll" />
+    <Content Include="bin\Release\System.Globalization.Extensions.dll" />
+    <Content Include="bin\Release\System.IO.Compression.dll" />
+    <Content Include="bin\Release\System.IO.Compression.ZipFile.dll" />
+    <Content Include="bin\Release\System.IO.dll" />
+    <Content Include="bin\Release\System.IO.FileSystem.dll" />
+    <Content Include="bin\Release\System.IO.FileSystem.DriveInfo.dll" />
+    <Content Include="bin\Release\System.IO.FileSystem.Primitives.dll" />
+    <Content Include="bin\Release\System.IO.FileSystem.Watcher.dll" />
+    <Content Include="bin\Release\System.IO.IsolatedStorage.dll" />
+    <Content Include="bin\Release\System.IO.MemoryMappedFiles.dll" />
+    <Content Include="bin\Release\System.IO.Pipes.dll" />
+    <Content Include="bin\Release\System.IO.UnmanagedMemoryStream.dll" />
+    <Content Include="bin\Release\System.Linq.dll" />
+    <Content Include="bin\Release\System.Linq.Expressions.dll" />
+    <Content Include="bin\Release\System.Linq.Parallel.dll" />
+    <Content Include="bin\Release\System.Linq.Queryable.dll" />
+    <Content Include="bin\Release\System.Net.Http.dll" />
+    <Content Include="bin\Release\System.Net.NameResolution.dll" />
+    <Content Include="bin\Release\System.Net.NetworkInformation.dll" />
+    <Content Include="bin\Release\System.Net.Ping.dll" />
+    <Content Include="bin\Release\System.Net.Primitives.dll" />
+    <Content Include="bin\Release\System.Net.Requests.dll" />
+    <Content Include="bin\Release\System.Net.Security.dll" />
+    <Content Include="bin\Release\System.Net.Sockets.dll" />
+    <Content Include="bin\Release\System.Net.WebHeaderCollection.dll" />
+    <Content Include="bin\Release\System.Net.WebSockets.Client.dll" />
+    <Content Include="bin\Release\System.Net.WebSockets.dll" />
+    <Content Include="bin\Release\System.ObjectModel.dll" />
+    <Content Include="bin\Release\System.Reflection.dll" />
+    <Content Include="bin\Release\System.Reflection.Extensions.dll" />
+    <Content Include="bin\Release\System.Reflection.Primitives.dll" />
+    <Content Include="bin\Release\System.Resources.Reader.dll" />
+    <Content Include="bin\Release\System.Resources.ResourceManager.dll" />
+    <Content Include="bin\Release\System.Resources.Writer.dll" />
+    <Content Include="bin\Release\System.Runtime.CompilerServices.VisualC.dll" />
+    <Content Include="bin\Release\System.Runtime.dll" />
+    <Content Include="bin\Release\System.Runtime.Extensions.dll" />
+    <Content Include="bin\Release\System.Runtime.Handles.dll" />
+    <Content Include="bin\Release\System.Runtime.InteropServices.dll" />
+    <Content Include="bin\Release\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <Content Include="bin\Release\System.Runtime.Numerics.dll" />
+    <Content Include="bin\Release\System.Runtime.Serialization.Formatters.dll" />
+    <Content Include="bin\Release\System.Runtime.Serialization.Json.dll" />
+    <Content Include="bin\Release\System.Runtime.Serialization.Primitives.dll" />
+    <Content Include="bin\Release\System.Runtime.Serialization.Xml.dll" />
+    <Content Include="bin\Release\System.Security.Claims.dll" />
+    <Content Include="bin\Release\System.Security.Cryptography.Algorithms.dll" />
+    <Content Include="bin\Release\System.Security.Cryptography.Csp.dll" />
+    <Content Include="bin\Release\System.Security.Cryptography.Encoding.dll" />
+    <Content Include="bin\Release\System.Security.Cryptography.Primitives.dll" />
+    <Content Include="bin\Release\System.Security.Cryptography.X509Certificates.dll" />
+    <Content Include="bin\Release\System.Security.Principal.dll" />
+    <Content Include="bin\Release\System.Security.SecureString.dll" />
+    <Content Include="bin\Release\System.Text.Encoding.dll" />
+    <Content Include="bin\Release\System.Text.Encoding.Extensions.dll" />
+    <Content Include="bin\Release\System.Text.RegularExpressions.dll" />
+    <Content Include="bin\Release\System.Threading.dll" />
+    <Content Include="bin\Release\System.Threading.Overlapped.dll" />
+    <Content Include="bin\Release\System.Threading.Tasks.dll" />
+    <Content Include="bin\Release\System.Threading.Tasks.Parallel.dll" />
+    <Content Include="bin\Release\System.Threading.Thread.dll" />
+    <Content Include="bin\Release\System.Threading.ThreadPool.dll" />
+    <Content Include="bin\Release\System.Threading.Timer.dll" />
+    <Content Include="bin\Release\System.ValueTuple.dll" />
+    <Content Include="bin\Release\System.Xml.ReaderWriter.dll" />
+    <Content Include="bin\Release\System.Xml.XDocument.dll" />
+    <Content Include="bin\Release\System.Xml.XmlDocument.dll" />
+    <Content Include="bin\Release\System.Xml.XmlSerializer.dll" />
+    <Content Include="bin\Release\System.Xml.XPath.dll" />
+    <Content Include="bin\Release\System.Xml.XPath.XDocument.dll" />
+    <Content Include="bin\Release\Vse.Web.Serialization.dll" />
+    <Content Include="bin\Release\Vse.Web.Serialization.pdb" />
+    <Content Include="Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

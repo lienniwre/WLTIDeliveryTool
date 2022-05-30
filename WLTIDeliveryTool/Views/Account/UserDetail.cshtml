@@ -1,0 +1,137 @@
+﻿@model DAL.User
+    @using WLTIDeliveryTool.Models
+    @{ 
+    ViewBag.Title = "create";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+
+        var session = new UserModel().GetSession();
+}
+@section style{
+    <link href="~/Content/date-time-picker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <style>
+
+        .field-validation-error {
+            color: red !important;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .input-validation-error {
+            border: solid 1px #d1d3e2 !important;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">User Detail</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 m-auto">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">User Details</h6>
+                </div>
+                <form class="form" id="frmCreateUser" method="post" action="">
+                    <div class="card-body">
+                        <label>User Id</label>
+                        @Html.TextBoxFor(m => m.UserId, null, new { @class = "form-control", @readOnly = true })
+
+                        <label>Username</label>
+                        @Html.TextBoxFor(m => m.UserName, null, new { @class = "form-control", @readOnly = true })
+                        <label>Status</label>
+                        @{ if (Model.UserRole == 1)
+                            {
+                                @Html.TextBox("UserRole", "Administrator", new { @class = "form-control", @readOnly = true })
+                            }
+                            else
+                            {
+                                @Html.TextBox("UserRole", "Standard User", new { @class = "form-control", @readOnly = true })
+                            } }
+
+                        <label>Status</label>
+                        @{ if (Model.Status == 1)
+                            {
+                                @Html.TextBox("Status", "Active", new { @class = "form-control", @readOnly = true })
+                            }
+                            else
+                            {
+                                @Html.TextBox("Status", "Deactivated", new { @class = "form-control", @readOnly = true })
+                            } }
+
+                    </div>
+                    <div class="card-footer">
+
+                        @{ if (Request["v"] == "qfayuk3jlm5mbh3fa")
+                            {
+                                <a href="/account/changepassword?f=@Request["f"]" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-pen text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Change Password</a>
+                            }else if(Model.UserRole == 1)
+                         
+                            {
+                                <a href="/account/updateuser?f=@Request["f"]" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-pen text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Update</a>
+                            }}
+
+                        <a style="padding:5px 30px 5px 10px;" onclick="history.go(-1)" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        function CreateUser() {
+            event.preventDefault();
+            let form = $('#frmCreateUser');
+
+            if (form.valid()) {
+
+                let model = {
+
+                    Username: $('input[name="Username"]').val(),
+                    Password: $('input[name="Password"]').val(),
+
+                };
+
+                Save(model);
+            }
+
+        }
+
+        let Save = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/Account/SaveUser',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+
+            }).done(function (data) {
+                alert(data.message);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+
+
+    </script>
+}

@@ -1,0 +1,141 @@
+﻿@model DAL.User
+@using WLTIDeliveryTool.Models
+@{
+    ViewBag.Title = "create";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+
+    var session = new UserModel().GetSession();
+}
+@section style{
+    <link href="~/Content/date-time-picker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <style>
+
+        .field-validation-error {
+            color: red !important;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .input-validation-error {
+            border: solid 1px #d1d3e2 !important;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Update Detail</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 m-auto">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Update Details</h6>
+                </div>
+                <form class="form" id="frmUpdateUser" method="post" action="">
+                    <div class="card-body">
+                        <label>User Id</label>
+                        @Html.TextBoxFor(m => m.UserId, null, new { @class = "form-control", @readOnly = true })
+
+                        <label>Username</label>
+                        @Html.TextBoxFor(m => m.UserName, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UserName, null, new { @style = "color:red;" })<br />
+                        <label>User Role</label>
+                        @{ if (Model.UserRole == 1)
+                            {
+
+                                @Html.DropDownListFor(m => m.UserRole, new List<SelectListItem> { new SelectListItem { Text = "Please select user role", Value = "", Selected = true }, new SelectListItem { Text = "Administrator", Value = "1" }, new SelectListItem { Text = "Standard User", Value = "2" } }, new { @class = "form-control custom-select" })
+
+                            }
+                            else
+                            {
+
+                                @Html.DropDownListFor(m => m.UserRole, new List<SelectListItem> { new SelectListItem { Text = "Please select user role", Value = "", Selected = true }, new SelectListItem { Text = "Administrator", Value = "1" }, new SelectListItem { Text = "Standard User", Value = "2" } }, new { @class = "form-control custom-select" })
+
+                            } }
+                        @Html.ValidationMessageFor(m => m.UserRole, null, new { @style = "color:red;" })<br />
+
+                        <label>Status</label>
+                        @{ if (Model.Status == 1)
+                            {
+
+                                @Html.DropDownListFor(m => m.Status, new List<SelectListItem> { new SelectListItem { Text = "Please select user status", Value = "", Selected = true }, new SelectListItem { Text = "Active", Value = "1" }, new SelectListItem { Text = "Deactivate", Value = "2" } }, new { @class = "form-control custom-select" })
+
+                            }
+                            else
+                            {
+
+                                @Html.DropDownListFor(m => m.Status, new List<SelectListItem> { new SelectListItem { Text = "Please select user role", Value = "", Selected = true }, new SelectListItem { Text = "Active", Value = "1" }, new SelectListItem { Text = "Deactivate", Value = "2" } }, new { @class = "form-control custom-select" })
+
+                            } }
+                        @Html.ValidationMessageFor(m => m.Status, null, new { @style = "color:red;" })<br />
+                    </div>
+                    <div class="card-footer">
+                       
+                        <button onclick="UpdateUser()" style="padding:5px 30px 5px 10px;" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save Changes</button>
+                        <a style="padding:5px 30px 5px 10px;" onclick="history.go(-1)" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        function UpdateUser() {
+            event.preventDefault();
+            let form = $('#frmUpdateUser');
+
+            if (form.valid()) {
+
+                let model = {
+
+                    UserName: $('input[name="UserName"]').val(),
+                    UserRole: $('select[name="UserRole"]>option:selected').val(),
+                    Status: $('select[name="Status"]>option:selected').val(),
+                    F:'@Request["f"]'
+
+                };
+
+                Save(model);
+            }
+
+        }
+
+        let Save = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/Account/SaveChanges',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+
+            }).done(function (data) {
+                alert(data.message);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+
+
+    </script>
+}

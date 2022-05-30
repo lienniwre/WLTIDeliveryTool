@@ -1,0 +1,811 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WLTIDeliveryToolsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Attachment" Type="varbinary(max)" />
+          <Property Name="FileType" Type="nvarchar" MaxLength="50" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FileSize" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="AttachmentType" Type="int" />
+          <Property Name="DrmId" Type="int" />
+        </EntityType>
+        <EntityType Name="ChannelSalesExecutive">
+          <Key>
+            <PropertyRef Name="CSEID" />
+          </Key>
+          <Property Name="CSEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="IsDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DeliveryOption">
+          <Key>
+            <PropertyRef Name="DeliveryOptionId" />
+          </Key>
+          <Property Name="DeliveryOptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModId" Type="int" />
+          <Property Name="Definition" Type="nvarchar" MaxLength="200" />
+          <Property Name="EstimatedDeliveryTime" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="DeliveryProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Definition" Type="nvarchar" MaxLength="350" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DeliveryStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Definition" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="DispatchRequisitionMonitoring">
+          <Key>
+            <PropertyRef Name="DrmId" />
+          </Key>
+          <Property Name="DrmId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DrmDate" Type="datetime" />
+          <Property Name="DrNumber" Type="int" />
+          <Property Name="ClientId" Type="int" />
+          <Property Name="CseId" Type="int" />
+          <Property Name="ModId" Type="int" />
+          <Property Name="ModOptionId" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="DateReceived" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedById" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="ConfirmedShipment" Type="int" />
+          <Property Name="Releasing" Type="int" />
+          <Property Name="WaybillNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuantityOfParcel" Type="int" />
+        </EntityType>
+        <EntityType Name="DrmProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DrmId" Type="int" />
+          <Property Name="DeliveryProgressId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Confirmed" Type="int" />
+          <Property Name="DateConfirmed" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EstimatedDelivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RangeFrom" Type="int" />
+          <Property Name="RangeTo" Type="int" />
+          <Property Name="UnitOfTime" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ModeOfDelivery">
+          <Key>
+            <PropertyRef Name="ModId" />
+          </Key>
+          <Property Name="ModId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Definition" Type="nvarchar" MaxLength="250" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="UserRole" Type="int" />
+        </EntityType>
+        <Association Name="FK_Attachment_DispatchRequisitionMonitoring">
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="0..1" />
+          <End Role="Attachment" Type="Self.Attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="DrmId" />
+            </Principal>
+            <Dependent Role="Attachment">
+              <PropertyRef Name="DrmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOption_EstimatedDelivery">
+          <End Role="EstimatedDelivery" Type="Self.EstimatedDelivery" Multiplicity="0..1" />
+          <End Role="DeliveryOption" Type="Self.DeliveryOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstimatedDelivery">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeliveryOption">
+              <PropertyRef Name="EstimatedDeliveryTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryOption_ModeOfDelivery">
+          <End Role="ModeOfDelivery" Type="Self.ModeOfDelivery" Multiplicity="0..1" />
+          <End Role="DeliveryOption" Type="Self.DeliveryOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModeOfDelivery">
+              <PropertyRef Name="ModId" />
+            </Principal>
+            <Dependent Role="DeliveryOption">
+              <PropertyRef Name="ModId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_ChannelSalesExecutive">
+          <End Role="ChannelSalesExecutive" Type="Self.ChannelSalesExecutive" Multiplicity="0..1" />
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChannelSalesExecutive">
+              <PropertyRef Name="CSEID" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="CseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_DeliveryOption">
+          <End Role="DeliveryOption" Type="Self.DeliveryOption" Multiplicity="0..1" />
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryOption">
+              <PropertyRef Name="DeliveryOptionId" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ModOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_DeliveryStatus">
+          <End Role="DeliveryStatus" Type="Self.DeliveryStatus" Multiplicity="0..1" />
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="Releasing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_DeliveryStatus1">
+          <End Role="DeliveryStatus" Type="Self.DeliveryStatus" Multiplicity="0..1" />
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ConfirmedShipment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_ModeOfDelivery">
+          <End Role="ModeOfDelivery" Type="Self.ModeOfDelivery" Multiplicity="0..1" />
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModeOfDelivery">
+              <PropertyRef Name="ModId" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ModId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DrmProgress_DispatchRequisitionMonitoring">
+          <End Role="DispatchRequisitionMonitoring" Type="Self.DispatchRequisitionMonitoring" Multiplicity="0..1" />
+          <End Role="DrmProgress" Type="Self.DrmProgress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="DrmId" />
+            </Principal>
+            <Dependent Role="DrmProgress">
+              <PropertyRef Name="DrmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WLTIDeliveryToolsModelStoreContainer">
+          <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChannelSalesExecutive" EntityType="Self.ChannelSalesExecutive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryOption" EntityType="Self.DeliveryOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryProgress" EntityType="Self.DeliveryProgress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryStatus" EntityType="Self.DeliveryStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DispatchRequisitionMonitoring" EntityType="Self.DispatchRequisitionMonitoring" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DrmProgress" EntityType="Self.DrmProgress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstimatedDelivery" EntityType="Self.EstimatedDelivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModeOfDelivery" EntityType="Self.ModeOfDelivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attachment_DispatchRequisitionMonitoring" Association="Self.FK_Attachment_DispatchRequisitionMonitoring">
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+            <End Role="Attachment" EntitySet="Attachment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOption_EstimatedDelivery" Association="Self.FK_DeliveryOption_EstimatedDelivery">
+            <End Role="EstimatedDelivery" EntitySet="EstimatedDelivery" />
+            <End Role="DeliveryOption" EntitySet="DeliveryOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryOption_ModeOfDelivery" Association="Self.FK_DeliveryOption_ModeOfDelivery">
+            <End Role="ModeOfDelivery" EntitySet="ModeOfDelivery" />
+            <End Role="DeliveryOption" EntitySet="DeliveryOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_ChannelSalesExecutive" Association="Self.FK_DispatchRequisitionMonitoring_ChannelSalesExecutive">
+            <End Role="ChannelSalesExecutive" EntitySet="ChannelSalesExecutive" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_Client" Association="Self.FK_DispatchRequisitionMonitoring_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_DeliveryOption" Association="Self.FK_DispatchRequisitionMonitoring_DeliveryOption">
+            <End Role="DeliveryOption" EntitySet="DeliveryOption" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_DeliveryStatus" Association="Self.FK_DispatchRequisitionMonitoring_DeliveryStatus">
+            <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_DeliveryStatus1" Association="Self.FK_DispatchRequisitionMonitoring_DeliveryStatus1">
+            <End Role="DeliveryStatus" EntitySet="DeliveryStatus" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_ModeOfDelivery" Association="Self.FK_DispatchRequisitionMonitoring_ModeOfDelivery">
+            <End Role="ModeOfDelivery" EntitySet="ModeOfDelivery" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DrmProgress_DispatchRequisitionMonitoring" Association="Self.FK_DrmProgress_DispatchRequisitionMonitoring">
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitoring" />
+            <End Role="DrmProgress" EntitySet="DrmProgress" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WLTIDeliveryToolsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="UserRole" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="WLTIDeliveryToolsEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="ChannelSalesExecutives" EntityType="WLTIDeliveryToolsModel.ChannelSalesExecutive" />
+          <EntitySet Name="DeliveryStatus1" EntityType="WLTIDeliveryToolsModel.DeliveryStatus" />
+          <EntitySet Name="Clients" EntityType="WLTIDeliveryToolsModel.Client" />
+          <EntitySet Name="DrmProgresses" EntityType="WLTIDeliveryToolsModel.DrmProgress" />
+          <EntitySet Name="DeliveryProgresses" EntityType="WLTIDeliveryToolsModel.DeliveryProgress" />
+          <EntitySet Name="DeliveryOptions" EntityType="WLTIDeliveryToolsModel.DeliveryOption" />
+          <EntitySet Name="EstimatedDeliveries" EntityType="WLTIDeliveryToolsModel.EstimatedDelivery" />
+          <AssociationSet Name="FK_DeliveryOption_EstimatedDelivery" Association="WLTIDeliveryToolsModel.FK_DeliveryOption_EstimatedDelivery">
+            <End Role="EstimatedDelivery" EntitySet="EstimatedDeliveries" />
+            <End Role="DeliveryOption" EntitySet="DeliveryOptions" />
+          </AssociationSet>
+          <EntitySet Name="ModeOfDeliveries" EntityType="WLTIDeliveryToolsModel.ModeOfDelivery" />
+          <AssociationSet Name="FK_DeliveryOption_ModeOfDelivery" Association="WLTIDeliveryToolsModel.FK_DeliveryOption_ModeOfDelivery">
+            <End Role="ModeOfDelivery" EntitySet="ModeOfDeliveries" />
+            <End Role="DeliveryOption" EntitySet="DeliveryOptions" />
+          </AssociationSet>
+          <EntitySet Name="Attachments" EntityType="WLTIDeliveryToolsModel.Attachment" />
+          <EntitySet Name="DispatchRequisitionMonitorings" EntityType="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" />
+          <AssociationSet Name="FK_Attachment_DispatchRequisitionMonitoring" Association="WLTIDeliveryToolsModel.FK_Attachment_DispatchRequisitionMonitoring">
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+            <End Role="Attachment" EntitySet="Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_ChannelSalesExecutive" Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ChannelSalesExecutive">
+            <End Role="ChannelSalesExecutive" EntitySet="ChannelSalesExecutives" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_Client" Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_DeliveryOption" Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryOption">
+            <End Role="DeliveryOption" EntitySet="DeliveryOptions" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_DeliveryStatus" Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus">
+            <End Role="DeliveryStatus" EntitySet="DeliveryStatus1" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_DeliveryStatus1" Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus1">
+            <End Role="DeliveryStatus" EntitySet="DeliveryStatus1" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DispatchRequisitionMonitoring_ModeOfDelivery" Association="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ModeOfDelivery">
+            <End Role="ModeOfDelivery" EntitySet="ModeOfDeliveries" />
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DrmProgress_DispatchRequisitionMonitoring" Association="WLTIDeliveryToolsModel.FK_DrmProgress_DispatchRequisitionMonitoring">
+            <End Role="DispatchRequisitionMonitoring" EntitySet="DispatchRequisitionMonitorings" />
+            <End Role="DrmProgress" EntitySet="DrmProgresses" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="ChannelSalesExecutive">
+          <Key>
+            <PropertyRef Name="CSEID" />
+          </Key>
+          <Property Name="CSEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <NavigationProperty Name="DispatchRequisitionMonitorings" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ChannelSalesExecutive" FromRole="ChannelSalesExecutive" ToRole="DispatchRequisitionMonitoring" />
+        </EntityType>
+        <EntityType Name="DeliveryStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Definition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <NavigationProperty Name="DispatchRequisitionMonitorings" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus" FromRole="DeliveryStatus" ToRole="DispatchRequisitionMonitoring" />
+          <NavigationProperty Name="DispatchRequisitionMonitorings1" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus1" FromRole="DeliveryStatus" ToRole="DispatchRequisitionMonitoring" />
+          </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DispatchRequisitionMonitorings" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_Client" FromRole="Client" ToRole="DispatchRequisitionMonitoring" />
+        </EntityType>
+        <EntityType Name="DrmProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DrmId" Type="Int32" />
+          <Property Name="DeliveryProgressId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Confirmed" Type="Int32" />
+          <Property Name="DateConfirmed" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DispatchRequisitionMonitoring" Relationship="WLTIDeliveryToolsModel.FK_DrmProgress_DispatchRequisitionMonitoring" FromRole="DrmProgress" ToRole="DispatchRequisitionMonitoring" />
+        </EntityType>
+        <EntityType Name="DeliveryProgress">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Definition" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DeliveryOption">
+          <Key>
+            <PropertyRef Name="DeliveryOptionId" />
+          </Key>
+          <Property Name="DeliveryOptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModId" Type="Int32" />
+          <Property Name="Definition" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EstimatedDeliveryTime" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <NavigationProperty Name="EstimatedDelivery" Relationship="WLTIDeliveryToolsModel.FK_DeliveryOption_EstimatedDelivery" FromRole="DeliveryOption" ToRole="EstimatedDelivery" />
+          <NavigationProperty Name="ModeOfDelivery" Relationship="WLTIDeliveryToolsModel.FK_DeliveryOption_ModeOfDelivery" FromRole="DeliveryOption" ToRole="ModeOfDelivery" />
+          <NavigationProperty Name="DispatchRequisitionMonitorings" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryOption" FromRole="DeliveryOption" ToRole="DispatchRequisitionMonitoring" />
+        </EntityType>
+        <EntityType Name="EstimatedDelivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RangeFrom" Type="Int32" />
+          <Property Name="RangeTo" Type="Int32" />
+          <Property Name="UnitOfTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DeliveryOptions" Relationship="WLTIDeliveryToolsModel.FK_DeliveryOption_EstimatedDelivery" FromRole="EstimatedDelivery" ToRole="DeliveryOption" />
+        </EntityType>
+        <Association Name="FK_DeliveryOption_EstimatedDelivery">
+          <End Type="WLTIDeliveryToolsModel.EstimatedDelivery" Role="EstimatedDelivery" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DeliveryOption" Role="DeliveryOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstimatedDelivery">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeliveryOption">
+              <PropertyRef Name="EstimatedDeliveryTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ModeOfDelivery">
+          <Key>
+            <PropertyRef Name="ModId" />
+          </Key>
+          <Property Name="ModId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Definition" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <NavigationProperty Name="DeliveryOptions" Relationship="WLTIDeliveryToolsModel.FK_DeliveryOption_ModeOfDelivery" FromRole="ModeOfDelivery" ToRole="DeliveryOption" />
+          <NavigationProperty Name="DispatchRequisitionMonitorings" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ModeOfDelivery" FromRole="ModeOfDelivery" ToRole="DispatchRequisitionMonitoring" />
+        </EntityType>
+        <Association Name="FK_DeliveryOption_ModeOfDelivery">
+          <End Type="WLTIDeliveryToolsModel.ModeOfDelivery" Role="ModeOfDelivery" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DeliveryOption" Role="DeliveryOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModeOfDelivery">
+              <PropertyRef Name="ModId" />
+            </Principal>
+            <Dependent Role="DeliveryOption">
+              <PropertyRef Name="ModId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Attachment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Attachment1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FileSize" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="AttachmentType" Type="Int32" />
+          <Property Name="DrmId" Type="Int32" />
+          <NavigationProperty Name="DispatchRequisitionMonitoring" Relationship="WLTIDeliveryToolsModel.FK_Attachment_DispatchRequisitionMonitoring" FromRole="Attachment" ToRole="DispatchRequisitionMonitoring" />
+        </EntityType>
+        <EntityType Name="DispatchRequisitionMonitoring">
+          <Key>
+            <PropertyRef Name="DrmId" />
+          </Key>
+          <Property Name="DrmId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DrmDate" Type="DateTime" Precision="3" />
+          <Property Name="DrNumber" Type="Int32" />
+          <Property Name="ClientId" Type="Int32" />
+          <Property Name="CseId" Type="Int32" />
+          <Property Name="ModId" Type="Int32" />
+          <Property Name="ModOptionId" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="DateReceived" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="ConfirmedShipment" Type="Int32" />
+          <Property Name="Releasing" Type="Int32" />
+          <Property Name="WaybillNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityOfParcel" Type="Int32" />
+          <NavigationProperty Name="Attachments" Relationship="WLTIDeliveryToolsModel.FK_Attachment_DispatchRequisitionMonitoring" FromRole="DispatchRequisitionMonitoring" ToRole="Attachment" />
+          <NavigationProperty Name="ChannelSalesExecutive" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ChannelSalesExecutive" FromRole="DispatchRequisitionMonitoring" ToRole="ChannelSalesExecutive" />
+          <NavigationProperty Name="Client" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_Client" FromRole="DispatchRequisitionMonitoring" ToRole="Client" />
+          <NavigationProperty Name="DeliveryOption" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryOption" FromRole="DispatchRequisitionMonitoring" ToRole="DeliveryOption" />
+          <NavigationProperty Name="DeliveryStatus" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus" FromRole="DispatchRequisitionMonitoring" ToRole="DeliveryStatus" />
+          <NavigationProperty Name="DeliveryStatus1" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_DeliveryStatus1" FromRole="DispatchRequisitionMonitoring" ToRole="DeliveryStatus" />
+          <NavigationProperty Name="ModeOfDelivery" Relationship="WLTIDeliveryToolsModel.FK_DispatchRequisitionMonitoring_ModeOfDelivery" FromRole="DispatchRequisitionMonitoring" ToRole="ModeOfDelivery" />
+          <NavigationProperty Name="DrmProgresses" Relationship="WLTIDeliveryToolsModel.FK_DrmProgress_DispatchRequisitionMonitoring" FromRole="DispatchRequisitionMonitoring" ToRole="DrmProgress" />
+        </EntityType>
+        <Association Name="FK_Attachment_DispatchRequisitionMonitoring">
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.Attachment" Role="Attachment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="DrmId" />
+            </Principal>
+            <Dependent Role="Attachment">
+              <PropertyRef Name="DrmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_ChannelSalesExecutive">
+          <End Type="WLTIDeliveryToolsModel.ChannelSalesExecutive" Role="ChannelSalesExecutive" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChannelSalesExecutive">
+              <PropertyRef Name="CSEID" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="CseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_Client">
+          <End Type="WLTIDeliveryToolsModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_DeliveryOption">
+          <End Type="WLTIDeliveryToolsModel.DeliveryOption" Role="DeliveryOption" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryOption">
+              <PropertyRef Name="DeliveryOptionId" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ModOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_DeliveryStatus">
+          <End Type="WLTIDeliveryToolsModel.DeliveryStatus" Role="DeliveryStatus" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="Releasing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_DeliveryStatus1">
+          <End Type="WLTIDeliveryToolsModel.DeliveryStatus" Role="DeliveryStatus" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ConfirmedShipment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DispatchRequisitionMonitoring_ModeOfDelivery">
+          <End Type="WLTIDeliveryToolsModel.ModeOfDelivery" Role="ModeOfDelivery" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModeOfDelivery">
+              <PropertyRef Name="ModId" />
+            </Principal>
+            <Dependent Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="ModId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DrmProgress_DispatchRequisitionMonitoring">
+          <End Type="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring" Role="DispatchRequisitionMonitoring" Multiplicity="0..1" />
+          <End Type="WLTIDeliveryToolsModel.DrmProgress" Role="DrmProgress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DispatchRequisitionMonitoring">
+              <PropertyRef Name="DrmId" />
+            </Principal>
+            <Dependent Role="DrmProgress">
+              <PropertyRef Name="DrmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WLTIDeliveryToolsModelStoreContainer" CdmEntityContainer="WLTIDeliveryToolsEntities1">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChannelSalesExecutives">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.ChannelSalesExecutive">
+              <MappingFragment StoreEntitySet="ChannelSalesExecutive">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CSEID" ColumnName="CSEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryStatus1">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.DeliveryStatus">
+              <MappingFragment StoreEntitySet="DeliveryStatus">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DrmProgresses">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.DrmProgress">
+              <MappingFragment StoreEntitySet="DrmProgress">
+                <ScalarProperty Name="DateConfirmed" ColumnName="DateConfirmed" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DeliveryProgressId" ColumnName="DeliveryProgressId" />
+                <ScalarProperty Name="DrmId" ColumnName="DrmId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryProgresses">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.DeliveryProgress">
+              <MappingFragment StoreEntitySet="DeliveryProgress">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryOptions">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.DeliveryOption">
+              <MappingFragment StoreEntitySet="DeliveryOption">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="EstimatedDeliveryTime" ColumnName="EstimatedDeliveryTime" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="ModId" ColumnName="ModId" />
+                <ScalarProperty Name="DeliveryOptionId" ColumnName="DeliveryOptionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstimatedDeliveries">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.EstimatedDelivery">
+              <MappingFragment StoreEntitySet="EstimatedDelivery">
+                <ScalarProperty Name="UnitOfTime" ColumnName="UnitOfTime" />
+                <ScalarProperty Name="RangeTo" ColumnName="RangeTo" />
+                <ScalarProperty Name="RangeFrom" ColumnName="RangeFrom" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModeOfDeliveries">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.ModeOfDelivery">
+              <MappingFragment StoreEntitySet="ModeOfDelivery">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="ModId" ColumnName="ModId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attachments">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.Attachment">
+              <MappingFragment StoreEntitySet="Attachment">
+                <ScalarProperty Name="DrmId" ColumnName="DrmId" />
+                <ScalarProperty Name="AttachmentType" ColumnName="AttachmentType" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="Attachment1" ColumnName="Attachment" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DispatchRequisitionMonitorings">
+            <EntityTypeMapping TypeName="WLTIDeliveryToolsModel.DispatchRequisitionMonitoring">
+              <MappingFragment StoreEntitySet="DispatchRequisitionMonitoring">
+                <ScalarProperty Name="QuantityOfParcel" ColumnName="QuantityOfParcel" />
+                <ScalarProperty Name="WaybillNo" ColumnName="WaybillNo" />
+                <ScalarProperty Name="Releasing" ColumnName="Releasing" />
+                <ScalarProperty Name="ConfirmedShipment" ColumnName="ConfirmedShipment" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateReceived" ColumnName="DateReceived" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModOptionId" ColumnName="ModOptionId" />
+                <ScalarProperty Name="ModId" ColumnName="ModId" />
+                <ScalarProperty Name="CseId" ColumnName="CseId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="DrNumber" ColumnName="DrNumber" />
+                <ScalarProperty Name="DrmDate" ColumnName="DrmDate" />
+                <ScalarProperty Name="DrmId" ColumnName="DrmId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,681 @@
+﻿@model WLTIDeliveryTool.ViewModel.DisplayDrmViewModel
+@using WLTIDeliveryTool.Helper
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Blankpage.cshtml";
+}
+@section style{
+    <link href="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+    <style>
+
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+            .navbar-dark .navbar-nav .nav-link:hover {
+                color: #8ac53f !important;
+            }
+
+        .nav-link {
+            border-left: solid 0.1px #373535;
+            padding: 20px 25px !important;
+        }
+
+        .navbar-dark .navbar-nav > li:last-child {
+            border-right: solid 0.1px #373535 !important;
+        }
+
+        .navbar-dark .navbar-nav > li > a {
+            font-family: "Montserrat", monospace;
+            text-transform: uppercase;
+            font-size: 13px !important;
+            font-weight: 900 !important;
+            line-height: 25px;
+        }
+
+        .navbar {
+            padding: 0;
+            border-top: solid 0.1px #373535;
+            border-bottom: solid 0.1px #373535;
+        }
+
+        .navbar-toggler {
+            margin: 20px 20px !important;
+            font-size: 1rem !important;
+        }
+
+        /*--------------------------------*/
+        ul.experiences {
+            padding-left: 15px;
+            margin-top: -1px;
+        }
+
+            ul.experiences li {
+                padding-left: 33px;
+                margin-bottom: 2.5em;
+                list-style: none;
+                background: url('../img/misc/list-bullet-darkgray.png') no-repeat;
+            }
+
+                ul.experiences li.green {
+                    background: url('../img/misc/list-bullet-green.png') no-repeat;
+                }
+
+                ul.experiences li.blue {
+                    background: url('../img/misc/list-bullet-blue.png') no-repeat;
+                }
+
+                ul.experiences li.pink {
+                    background: url('../img/misc/list-bullet-pink.png') no-repeat;
+                }
+
+
+
+        /* BORDERS AND BULLETS */
+
+        p {
+            /*CSS reset*/
+            margin-bottom: 0;
+        }
+
+        ul.experiences li {
+            position: relative; /* so that pseudoelements are positioned relatively to their "li"s*/
+            /* use padding-bottom instead of margin-bottom.*/
+            margin-bottom: 0; /* This overrides previously specified margin-bottom */
+            padding-bottom: 2.5em;
+        }
+
+
+            ul.experiences li:after {
+                /* bullets */
+                font-family: "Font Awesome\ 5 Free";
+                font-weight: 600;
+                content: "\f111";
+                position: absolute;
+                left: -28px; /*adjust manually*/
+                top: 0;
+                font-size: 25px;
+                padding: 0;
+            }
+
+            ul.experiences li:first-child:after {
+                /* bullets */
+                font-family: "Font Awesome\ 5 Free";
+                font-weight: 900;
+                font-size: 25px;
+                content: "\f058";
+                position: absolute;
+                left: -28px; /*adjust manually*/
+                top: -5px;
+                color: forestgreen;
+            }
+
+
+            ul.experiences li:before {
+                /* lines */
+                content: "";
+                position: absolute;
+                left: -16px; /* adjust manually */
+                border-left: 1px solid black;
+                height: 100%;
+                width: 1px;
+            }
+
+            ul.experiences li:first-child:before {
+                /* first li's line */
+                top: 19px; /* moves the line down so that it disappears under the bullet. Adjust manually */
+            }
+
+            ul.experiences li:last-child:before {
+                /* last li's line */
+                height: 6px; /* shorten the line so it goes only up to the bullet. Is equal to first-child:before's top */
+            }
+
+        table > tbody > tr > td:not(:last-child) {
+            /*width: 800px;*/
+        }
+
+        table > tbody > tr > td:last-child {
+            /*width: 300px;*/
+        }
+
+        .table td {
+            border-bottom: 1px solid #e3e6f0 !important;
+        }
+
+            .table td:first-child {
+                border-left: 1px solid #e3e6f0 !important;
+            }
+
+            .table td:last-child {
+                border-right: 1px solid #e3e6f0 !important;
+            }
+
+        table > tbody > tr {
+            /*box-shadow:1px 1px 1px;*/
+        }
+
+        table > thead > tr > th {
+            display: none;
+        }
+
+        .dataTables_empty {
+            display: none;
+        }
+    </style>
+}
+<div class="wrapper">
+    <div class="row">
+        <div class="col-md-12">
+
+            <img src="~/Content/Images/logo_web2016.png" style="margin-top:15px;margin-left:90px;margin-bottom:15px;" />
+        </div>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color:#151515 !important;">
+    <a class="navbar-brand" style="width:80px;" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="https://wireless-link.net/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://wireless-link.net/about-us/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    About Us
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="https://wireless-link.net/news-updates/">News &amp; Updates</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/category/training/">Training Schedule</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/about-us/careers/">Careers</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/privacy-policy/">Privacy Policy</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/software-and-hardware-resources/">Software and Hardware resources</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="https://wireless-link.net/products/ubiquiti-networks/">Ubiquiti Networks</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/products/icom/">ICOM</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/cambiumnetworks/">Cambium Networks</a>
+
+                    <a class="dropdown-item" href="https://wireless-link.net/products/mikrotik/">Mikrotik</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/gps-eye-tracker-vehicle-tracking-system/">GPS Eye Tracker – Vehicle Tracking System</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/products/biometrics/">Biometrics</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/ipphone-ippbx/">IP Phone/IP-PBX/VoIP/IP Gateway</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/honeywell/">Honeywell – Fire Detection &amp; Alarm System</a>
+                    <a class="dropdown-item" title="Ethernet Switch" href="https://wireless-link.net/products/ip-com/">IP-COM</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/product-category/ruijie-networks">Ruijie Networks</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/product-category/orange-pi/">Orange Pi</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/product-category/ruckus/">Ruckus</a>
+                </div>
+
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    CCTV/IP Surveillance
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="https://wireless-link.net/products/hikvision/">Hikvision</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/products/dahua/">Dahua</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/products/geovision/">GeoVision</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Solutions
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="https://wireless-link.net/city-wide-wifi-hotspot-system/">City-wide WiFi Hotspot System</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/cctv-surveillance-system/">CCTV Surveillance System</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/digital-radio-communication-system/">Digital Radio Communication System</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/command-communication-and-control-center/">Command, Communication and Control Center</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/cctv-system-remote-monitoring/">CCTV System Remote Monitoring</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/rural-internet/">Rural Internet</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/smart-hotel-solution-by-hikvision/">Smart Hotel Solution by Hikvision</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/hd-casino-solution-by-dahua/">HD Casino Solution by Dahua</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/mikrotik-wireless-solutions/">MikroTik Wireless Solutions</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/wireless-connectivity-solutions-for-education-by-cambium-networks/">Wireless Connectivity Solutions for Education – by Cambium Networks</a>
+                    <a class="dropdown-item" href="https://wireless-link.net/ip-pbx-system/">IP-PBX System</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Contact Us
+                </a>
+
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="wrapper" style="overflow-x:hidden;">
+    <div class="row" style="background-color:#ffffff;">
+        <div class="col-md-12 p-5 text-info" style="background-color:#ffffff;">
+            <h6>Cargo Monitoring</h6>
+            <div class="card-body">
+                <div class="form-group row">
+                    <div class="col-md-11">  @Html.TextBox("url", Request.Url.AbsoluteUri, new { @class = "form-control", @readOnly = true, @id = "myInput" })</div>
+
+                    <div class="col-md-1">  <i onclick="CopyMeUrl()" class="fas fa-copy fa-2x" style="cursor:pointer;"></i></div>
+                </div>
+
+
+
+
+
+                @{if (Model.IsDelivered == "unconfirmed")
+                    {
+                        <div class="alert alert-dark" role="alert" style="line-height:36px;">
+                            <span style="  vertical-align: middle;line-height:normal;">
+                                Order received? <a href="" onclick="ConfirmOrder()">Click here to confirm.</a>
+                            </span>
+
+                        </div>
+
+                    }
+                    else if (Model.IsDelivered == "confirmed")
+                    {
+                        <div class="alert alert-dark" role="alert" style="line-height:36px;">
+                            <span style="  vertical-align: middle;line-height:normal;">
+                                Order Delivered.
+                            </span>
+
+                        </div>
+                    } }
+                <div class="row">
+
+                    <div class="col-md-3 col-xs-12">
+                        <label>DR#</label>
+                        @Html.TextBoxFor(m => m.DrNumber, null, new { @class = "form-control", @placeholder = "Enter DR number", disabled = true })
+
+
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        <label>WayBill#</label>
+                        @Html.TextBoxFor(m => m.WayBillNo, null, new { @class = "form-control", @placeholder = "Enter DR number", disabled = true })
+
+
+                    </div>
+
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Client Name</label>
+                        @Html.TextBoxFor(m => m.ClientName, null, new { @class = "form-control", disabled = true })
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Courier</label>
+                        @Html.DropDownListFor(m => m.DeliveryOption, SelectListHelper.DeliveryOption(Model.ModId), new { @class = "form-control custom-select", disabled = true })
+
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        <label>Estimated Delivery Time</label>
+                        @Html.TextBoxFor(m => m.Edt, null, new { @class = "form-control", disabled = true })
+
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        <label>Qty. of Parcel</label>
+                        @Html.TextBoxFor(m => m.QuantityOfParcel, null, new { @class = "form-control", @placeholder = "Enter DR number", disabled = true })
+
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="table  table-responsive">
+                        <table id="tblAttachment" class="row-border" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>FileName</th>
+                                    <th>Uploaded Image</th>
+                                    <th>Type</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="background-color:#ffffff;">
+        <div class="col-md-4 m-auto p-5" style="padding-top:0px !important;">
+            <div class="card-body">
+
+                <ul class="experiences"></ul>
+            </div>
+
+        </div>
+    </div>
+    <footer class="sticky-footer" style="background-color:#151515;padding-top:0 !important;">
+        <div class="row mb-5" style="background-color:#202020;">
+            <div class="col-md-3 col-lg-3 p-4">
+                <div class="copyright my-auto">
+                    <p class="font-weight-bold">Manila (Main)</p>
+                    <p>544 Florentino Torres St., Sta. Cruz, Manila</p>
+                    <p>(02) 8353 6086</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 p-4">
+                <div class="copyright my-auto">
+                    <p class="font-weight-bold">Bacolod City</p>
+
+                    <p>
+                        Door 6 Vertland Corporation Bldg.
+                    </p>
+                    <p>
+                        San Juan St., Bacolod City
+                    </p>
+                    <p> (034) 432 1733</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 p-4">
+                <div class="copyright my-auto">
+                    <p class="font-weight-bold"> Iloilo City </p>
+                    <p>
+                        133 JP Building. Delgado St., Mabolo,
+                    </p><p>
+                        Iloilo City
+                    </p>
+                    <p>(033) 501 0237</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 p-4">
+                <div class="copyright my-auto">
+                    <p class="font-weight-bold"> Gen. Santos City </p>
+                    <p>Door 2 De Paseo Bldg. Aparente St. cor.</p>
+                    <p>Block 2, City Heights, Gen. Santos City</p>
+                    <p>(083) 554 3805</p>
+                </div>
+            </div>
+        </div>
+        <div class="container my-auto">
+
+            <div class="copyright text-center my-auto">
+                <span>©  @DateTime.Now.Year Wireless Link Technologies, Inc. All Rights Reserved.</span>
+            </div>
+        </div>
+    </footer>
+    <div class="modal fade" id="modalUpdateAttachment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabelFileName"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form" id="frmUpdateAttachment" method="post" action="">
+
+                        <div class="row mb-2">
+
+                            <div class="display-image m-auto" style="margin-bottom:40px !important;">
+
+                            </div>
+
+                            <center><span id="file-type-validation" style="color:red;"></span></center>
+                            @Html.HiddenFor(m => m.Attachment.F)
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="deleteAttachment" onclick="ConfirmDelete()" disabled="true" style="padding:5px 30px 5px 10px;display:none !important;" class=" btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-trash text-dark" data-save-btn=""> </i>&nbsp; &nbsp; Delete</button>
+                    @*<a style="padding:5px 30px 5px 10px;" href="/admin/incident/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/sb-admin/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/sb-admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/date-utilities.js"></script>
+<script src="~/Content/sb-admin/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        let model = {
+            f: '@Request["f"]'
+        };
+        GetDrmProgress(model);
+
+        $('#tblAttachment').DataTable({
+                    "ajax": {
+                "url": "/Attachment/DisplayAttachments?f=@Request["f"]",
+                        "type": "POST",
+                        "dataType": "json"
+                    },
+            "columns": [{ "data": "FileName", "name": "FileName" },
+                { "data": "FileType", "name": "FileType", "width": "120px;" },
+                        {
+                            "data": "Attachment", "render": function (data) {
+                                if (data != null) {
+                                    return "<img src='data:Image/png;base64," + data + "' width='auto' style='object-fit:cover;max-height:30px;' />"
+                                } else {
+                                    return ""
+                                }
+
+                            },
+                            "orderable":false
+                        },
+
+                        {
+                            "data": "Id", "render": function (data) {
+
+                                return "<button onclick='DisplayAttachment("+data+");' class='btn btn-light btn-sm'><i class='fa fa-search'></i></button>"
+                            },
+                            "orderable": false,
+                            "width":"200px"
+                        }
+            ],
+            columnDefs: [{ "targets": [0], "render": function (data) { return "<i class='fa fa-image'></i> " + data }}],
+                    "serverSide": true,
+                    "processing": true,
+            "language": {
+                "emptyTable": function () { $('.dataTables_empty').css({'display':'none'}); } },
+            "info": false,
+            "filter": false,
+            "paging": false
+
+
+        });
+
+
+    });
+
+    let GetDrmProgress = function (model) {
+        $.ajax({
+            type: 'POST',
+            url: location.origin + '/drm/displaydrmprogress',
+            data: JSON.stringify(model),
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            beforeSend: function () {
+
+            }
+
+        }).done(function (data) {
+
+
+            $.each(data.data, function (index, item) {
+
+
+
+
+
+
+                var s = new Date(parseInt(item.Date.substr(6)));
+                var sDate = dateToJs(s, 'datetime');
+                var definition = item.Definition;
+                var progressItem = '<li class="green">' +
+                    '<div class="where">'+sDate+'</div>' +
+
+                    '<p>' +
+                        definition +
+                    '</p>' +
+
+                    '</li>';
+
+                var ul = $('.experiences');
+                ul.append(progressItem);
+
+            })
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
+    };
+
+    function CopyMeUrl() {
+        var copyTextarea = document.getElementById("myInput");
+        copyTextarea.select(); //select the text area
+        document.execCommand("copy");
+
+    }
+
+    function DisplayAttachment(id) {
+
+        let model = {
+            id: id
+        };
+        GetAttachmentDetails(model, 'display');
+        $('#deleteAttachment').hide();
+        $('#deleteAttachment').attr('disabled', true);
+        $('#modalUpdateAttachment').modal('show');
+    }
+
+    function GetAttachmentDetails(aid, action) {
+        $.ajax({
+            url: location.origin + '/Attachment/displayAttachment',
+            type: 'POST',
+            data: JSON.stringify(aid),
+            dataType: 'json',
+            contentType: 'application/json;charset=utf-8',
+            beforeSend: function () {
+
+
+            },
+            success: function (data) {
+                if (data.returnCode == "200") {
+
+                    let imgsrc = 'data:' + data.data.FileType + ';base64,' + data.data.StrAttachment;
+                    let image = '<img src="' + imgsrc + '" class="mb-3" style="max-height:100%;max-width:100%;object-fit:cover;" />'
+                    $('.display-image').empty();
+                    $('.display-image').append(image);
+                    $('input[name="Attachment.F"]').val(data.data.F);
+                    if (action == 'delete') {
+                        $('#modalLabelFileName').html('Delete ' + data.data.FileName + '?');
+
+                    } else {
+                        $('#modalLabelFileName').html(data.data.FileName);
+
+                    }
+
+                } else {
+                    alert('Oops something went wrong');
+                };
+
+            },
+
+        });
+    }
+
+    function ConfirmOrder() {
+            event.preventDefault();
+
+                let model = {
+
+                    ProgressId: 7,
+                    f: '@Model.HashId',
+                    Confirmed: 1
+                };
+
+                Save(model);
+
+    }
+
+
+        let Save = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/drm/saveprogress',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+
+            }).done(function (data) {
+                alert(data.message);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+    };
+
+    function copyText(element) {
+        var range, selection, worked;
+
+        if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(element);
+            range.select();
+        } else if (window.getSelection) {
+            selection = window.getSelection();
+            range = document.createRange();
+            range.selectNodeContents(element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        try {
+            document.execCommand('copy');
+            alert(selection);
+        }
+        catch (err) {
+            alert('unable to copy text');
+        }
+    }
+
+
+</script>
+

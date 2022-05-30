@@ -1,0 +1,349 @@
+﻿
+@model DAL.Client
+@using WLTIDeliveryTool.Helper
+
+@{
+    ViewBag.Title = "create";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+
+
+}
+@section style{
+    <link href="~/Content/date-time-picker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <script src="~/Scripts/date-utilities.js"></script>
+    <style>
+
+        .field-validation-error {
+            color: red !important;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .input-validation-error {
+            border: solid 1px #d1d3e2 !important;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        table > tbody > tr:hover {
+            cursor: pointer;
+        }
+
+        table > tbody > tr > td:not(:first-child):not(:last-child) {
+            font-size: .85em;
+            white-space: nowrap;
+            min-width: 300px;
+        }
+
+        table > tbody > tr > td:nth-child(2) {
+            min-width: 550px !important;
+        }
+
+        table > tbody > tr > td:last-child {
+            text-align: center;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Clients</h1>
+
+    </div>
+    <div class="row">
+
+        <div class="col-md-12 m-auto">
+            <div class="card shadow mb-4">
+                <div class="card-header float-left">
+                    <h6 class="m-0 font-weight-bold text-primary float-left">Clients</h6>
+                    <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modalProgress"><i class="fa fa-plus text-white"></i></button>
+                </div>
+
+
+                <div class="card-body">
+
+                    <div class="table table-responsive" style="width:100%;">
+                        <table id="tblClient" class="dataTable display-compact table-responsive" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Client Name</th>
+                                    <th> Date Created</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Client Name</td>
+                                    <td>Date Created</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add new client</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 m-auto">
+
+                    <form class="form" id="frmCreateDRM" method="post" action="">
+
+                        <div class="row mb-2">
+                            <div class="col-md-12 col-xs-12">
+                                <label>Client Name</label>
+                                @Html.TextBoxFor(m => m.ClientName, null, new { @class = "form-control", @placeholder = "Enter Client Name" })
+
+                                @Html.ValidationMessageFor(m => m.ClientName, null, new { @style = "color:red;" })
+
+                            </div>
+
+                        </div>
+
+
+
+
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSave" onclick="CreateClient()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalUpdateClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Client Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 m-auto">
+
+                    <form class="form" id="frmUpdateClient" method="post" action="">
+
+                        <div class="row mb-2">
+                            <div class="col-md-12 col-xs-12">
+                                <label>Client Name</label>
+                                @Html.EditorFor(m => m.ClientName, new { @htmlAttributes = new { @class = "form-control", @placeholder = "Enter Client Name" } })
+
+                                @Html.ValidationMessageFor(m => m.ClientName, null, new { @style = "color:red;" })
+                                @Html.HiddenFor(m => m.ClientId)
+
+                            </div>
+
+                        </div>
+
+
+
+
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="SaveUpdate()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/date-time-picker/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/sb-admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/date-utilities.js"></script>
+    <script src="~/Scripts/button-loader.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblClient').DataTable({
+                "ajax": {
+                    "url": "/client/displayclient",
+                    "type": "POST",
+                    "dataType": "json"
+                },
+                "columns": [{ "data": "ClientId", "name": "ClientId" },
+                { "data": "ClientName", "name": "ClientName" },
+                { "data": "DateCreated", "name": "DateCreated" },
+                {
+                    "data": "ClientId", "render": function (data) {
+                        return "<button onclick='Update(" + data + ")' class='btn btn-light btn-sm'><i class='fa fa-pen'></i></button> "
+
+                    },
+                    "orderable": false,
+                    "width": "100px"
+                }
+
+                ],
+                columnDefs: [{
+                    "targets": [2], "render": function (data, type) {
+
+
+                        if (data == null) {
+                            return data
+                        } else {
+                            var s = new Date(parseInt(data.substr(6)));
+                            return type === 'sort' ? data : dateToJs(s, 'date');
+                        }
+
+                    }
+                }],
+                "serverSide": true,
+                "processing": true,
+                "language": { "emptyTable": "No data found, Please click on <b>Add New</b> Button." }
+
+            });
+
+
+
+        });
+        let btn = new ButtonLoader('btnSave');
+        function CreateClient() {
+            event.preventDefault();
+            let form = $('#frmCreateDRM');
+
+            if (form.valid()) {
+
+                let model = {
+
+                    ClientName: $('input[name="ClientName"]').val()
+
+                }
+
+                Save(model);
+
+            } else {
+
+            }
+
+        }
+        let Save = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/client/saveclient',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+                    btn.Processing();
+                }
+
+            }).done(function (data) {
+                btn.Completed();
+                setTimeout(function () { alert(data.message); }, 1000);
+                setTimeout(function () { window.location = location.origin + '/Home/index'; }, 1500);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+
+        function Update(clientId) {
+
+            let model = { id: clientId };
+
+            GetClientById(model);
+        }
+
+        function SaveUpdate() {
+            event.preventDefault();
+            let form = $('#frmUpdateClient');
+
+            if (form.valid()) {
+
+                let model = {
+                    ClientId: $('input[name="ClientId"]').val(),
+                    ClientName: $('#frmUpdateClient input[name="ClientName"]').val()
+
+                };
+
+                SaveChanges(model);
+
+            } else {
+
+            }
+
+        }
+
+        function GetClientById(model) {
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/client/getclient',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+
+            }).done(function (data) {
+                $('#frmUpdateClient input[name="ClientName"]').val(data.ClientName);
+                $('input[name="ClientId"]').val(data.ClientId);
+                $('#modalUpdateClient').modal('show');
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+        }
+
+        let SaveChanges = function (model) {
+
+            $.ajax({
+                type: 'POST',
+                url: location.origin + '/client/savechangestoclient',
+                data: JSON.stringify(model),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                beforeSend: function () {
+
+                }
+
+            }).done(function (data) {
+                alert(data.message);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        };
+    </script>
+}

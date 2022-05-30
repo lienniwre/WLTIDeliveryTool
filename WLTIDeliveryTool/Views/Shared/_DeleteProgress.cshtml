@@ -1,0 +1,42 @@
+﻿@model WLTIDeliveryTool.ViewModel.AdminDisplayDrmViewModel
+@using WLTIDeliveryTool.Helper
+@using System.Globalization
+
+<div class="modal fade" id="modalDeleteProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Progress</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" id="frmDeleteProgress" method="post" action="">
+
+                    <div class="row mb-2">
+
+                        <div class="col-md-12 col-xs-12">
+                            <label id="Date">Date</label>
+                           
+
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+
+                            <label id="Definition">Progress</label>
+                           
+
+                        </div>
+                        @Html.HiddenFor(m => m.Progress.Id)
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="SaveUpdate()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+                <a style="padding:5px 30px 5px 10px;" href="/admin/incident/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+
+            </div>
+        </div>
+    </div>
+</div>

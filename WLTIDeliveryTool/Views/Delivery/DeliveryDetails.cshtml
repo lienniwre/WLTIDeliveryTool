@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "DeliveryDetails";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Batch 4KG643</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Packaging
+                            </div>
+                            <i class="fas fa-check-circle fa-1x text-success"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box-open fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Courier on way
+                            </div>
+                            <i class="fas fa-check-circle fa-1x text-success"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-shipping-fast fa-2x text-success"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            @*<i class="fas fa-arrow-right fa-1x text-success" style="position:absolute;right:-8px; top:45px;"></i>*@
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-light shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-gray-300 text-uppercase mb-1">
+                                Waiting to receive
+                            </div>
+                            <i class="fas fa-spinner fa-1x text-gray-300"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-hand-holding fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-light shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-gray-300 text-uppercase mb-1">
+                                Parcel received
+                            </div>
+                            <i class="fas fa-spinner fa-1x text-gray-300"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-hand-holding-medical fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 m-auto">
+            <form class="form" id="frmSubmitIncidentReport" method="post" action="">
+                <div class="card-body">
+
+
+
+                    <label>Client Name</label>
+                    @Html.TextBox("PoNumber", "Wireless Link Technologies, Inc", new { @class = "form-control mb-4" })
+
+
+                    <label>Delivery Address</label>
+                    @Html.TextBox("PoNumber", "544 Florentino Torres St. Sta. Cruz Manila", new { @class = "form-control mb-4" })
+
+                    <label>Delivery Date</label>
+                    @Html.TextBox("PoNumber", "October 3, 2021", new { @class = "form-control mb-4" })
+
+                    <label>PO Number</label>
+                    @Html.TextBox("PoNumber", "4KG643", new { @class = "form-control mb-4" })
+
+                    <label>Additional Notes</label>
+                    @Html.TextArea("PoNumber", null, new { @class = "form-control mb-4" })
+
+
+                </div>
+                <div class="card-footer">
+                    <button onclick="SubmitIncidentReport()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+                    <a style="padding:5px 30px 5px 10px;" href="/admin/incident/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,196 @@
+﻿@using WLTIDeliveryTool.Models;
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+    var userModel = new UserModel();
+    var session = userModel.GetSession();
+    var role = session.Role;
+}
+
+
+
+@section style{
+    <link href="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <style>
+        table > tbody > tr:hover {
+            cursor: pointer;
+        }
+
+        table > tbody > tr > td {
+            font-size: .85em;
+            white-space:nowrap;
+            min-width:200px;
+        }
+        table > tbody > tr > td:nth-child(1){
+           background-color:#ffffff;
+        }
+            table > tbody > tr > td:nth-child(10) {
+                background-color: #ffffff;
+            }
+            table > thead > tr > th:nth-child(1) {
+                background-color: #ffffff;
+                z-index:3;
+            }
+        table > thead > tr > th:nth-child(10) {
+            background-color: #ffffff;
+            z-index: 3;
+        }
+        table > tfoot > tr > td:nth-child(1) {
+            background-color: #ffffff;
+            z-index: 3;
+        }
+        table > tfoot > tr > td:nth-child(10) {
+            background-color: #ffffff;
+            z-index: 3;
+        }
+    </style>
+}
+
+
+
+
+<!-- Topbar -->
+<!-- End of Topbar -->
+<!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dispatch Requisition Monitoring</h1>
+            @if (role == "1" || role == "2")
+            {
+                <a href="/drm/createdrm" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                    <i class="fas fa-plus fa-sm text-white-50"></i> Create new
+                </a>
+            }
+        </div>
+        <!-- Content Row -->
+        <div class="row">
+
+
+
+
+            <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header">
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="table  table-responsive">
+                            <table id="tblTracking" class="dataTable display-compact table-responsive" cellspacing="0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>DR#</th>
+                                        <th>Date</th>
+                                        <th>Client</th>
+                                        <th>Requested By</th>
+                                        <th>Mode of Delivery</th>
+                                        <th>Courier</th>
+                                        <th>Released</th>
+
+                                        <th>Received</th>
+                                        <th>Date Received By Client</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>DR#</td>
+                                        <td>Date</td>
+                                        <td>Client</td>
+                                        <td>Requested By</td>
+                                        <td>Mode of Delivery</td>
+                                        <td>Courier</td>
+                                        <td>Confirmed Shipment</td>
+
+                                        <td>Releasing</td>
+                                        <td>Date Received By Client</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pie Chart -->
+
+        </div>
+        <!-- /.container-fluid -->
+        <!-- End of Main Content -->
+        <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+
+
+
+
+        @section scripts{
+            <script src="~/Content/sb-admin/vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script src=https://cdn.datatables.net/fixedcolumns/4.0.2/js/dataTables.fixedColumns.min.js></script>
+            <script src="~/Scripts/date-utilities.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#tblTracking').DataTable({
+                        "ajax": {
+                            "url": "/Home/DisplayDrm",
+                            "type": "POST",
+                            "dataType": "json"
+                        },
+                        "columns": [{ "data": "DrNumber", "name": "DrNumber" },
+                        { "data": "DrmDate", "name": "DrmDate" },
+                        { "data": "ClientName", "name": "ClientName" },
+                        { "data": "RequestedBy", "name": "RequestedBy" },
+                        {
+                            "data": "ModeOfDelivery", "name": "ModeOfDelivery"
+                        },
+                        {
+                            "data": "Courier", "name": "Courier"
+                        },
+                        { "data": "ConfirmedShipment", "name": "ConfirmedShipment" },
+
+                        { "data": "Releasing", "name": "Releasing" },
+                        { "data": "DateReceivedByClient", "name": "DateReceivedByClient" },
+                        {
+                            "data": "HashId", "render": function (data) {
+                                if ('@role' == '1' || '@role' == '2') {
+                                   
+                                    return " <a href='/drm/admindisplay?f=" + data + "' class='btn btn-light btn-sm'><i class='fa fa-search'></i> View</a>| <a href='/drm/displaydrm?f=" + data + "' class='btn btn-light btn-sm'><i class='fa fa-search'></i> View as Client</a>"
+                                } else {
+                                    return "<a href='/drm/displaydrm?f=" + data + "' class='btn btn-light btn-sm'><i class='fa fa-search'></i> View</a>"
+                                }
+                            },
+                            "orderable": false,
+                            "width": "100px"
+                        }
+                        ],
+                        columnDefs: [{
+                            "targets": [1, 8], "render": function (data, type) {
+
+
+                                if (data == null) {
+                                    return data
+                                } else {
+                                    var s = new Date(parseInt(data.substr(6)));
+                                    return type === 'sort' ? data : dateToJs(s, 'date');
+                                }
+
+                            }
+                        }],
+                        "serverSide": true,
+                        "processing": true,
+                        "language": { "emptyTable": "No data found, Please click on <b>Add New</b> Button." },
+                        "order": [[1, "desc"]],
+                        fixedColumns: {
+                            left: 1,
+                            right: 1
+                        }
+
+                    });
+
+                });
+            </script>
+        }

@@ -1,0 +1,216 @@
+﻿
+@{
+    ViewBag.Title = "DeliveryDetails";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+}
+@section style{
+    <style>
+        ul.experiences {
+            padding-left: 15px;
+            margin-top: -1px;
+        }
+
+            ul.experiences li {
+                padding-left: 33px;
+                margin-bottom: 2.5em;
+                list-style: none;
+                background: url('../img/misc/list-bullet-darkgray.png') no-repeat;
+            }
+
+                ul.experiences li.green {
+                    background: url('../img/misc/list-bullet-green.png') no-repeat;
+                }
+
+                ul.experiences li.blue {
+                    background: url('../img/misc/list-bullet-blue.png') no-repeat;
+                }
+
+                ul.experiences li.pink {
+                    background: url('../img/misc/list-bullet-pink.png') no-repeat;
+                }
+
+        
+
+        /* BORDERS AND BULLETS */
+
+        p {
+            /*CSS reset*/
+            margin-bottom: 0;
+        }
+
+        ul.experiences li {
+            position: relative; /* so that pseudoelements are positioned relatively to their "li"s*/
+            /* use padding-bottom instead of margin-bottom.*/
+            margin-bottom: 0; /* This overrides previously specified margin-bottom */
+            padding-bottom: 2.5em;
+        }
+
+            ul.experiences li:after {
+                /* bullets */
+                font-family: "Font Awesome\ 5 Free";
+                font-weight: 600;
+                content: "\f058";
+                position: absolute;
+                left: -28px; /*adjust manually*/
+                top: 0;
+                font-size: 25px;
+               
+                padding:0;
+            }
+
+            ul.experiences li:first-child:after {
+                /* bullets */
+                font-family: "Font Awesome\ 5 Free";
+                font-weight: 900;
+                font-size:25px;
+                content: "\f058";
+                position: absolute;
+                left: -28px; /*adjust manually*/
+                top: -5px;
+            }
+
+
+            ul.experiences li:before {
+                /* lines */
+                content: "";
+                position: absolute;
+                left: -16px; /* adjust manually */
+                border-left: 1px solid black;
+                height: 100%;
+                width: 1px;
+                
+            }
+
+            ul.experiences li:first-child:before {
+                /* first li's line */
+                top: 19px; /* moves the line down so that it disappears under the bullet. Adjust manually */
+            }
+
+            ul.experiences li:last-child:before {
+                /* last li's line */
+                height: 6px; /* shorten the line so it goes only up to the bullet. Is equal to first-child:before's top */
+            }
+        
+       
+
+    </style>
+    
+    }
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Batch 4KG643</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Packaging
+                            </div>
+                            <i class="fas fa-check-circle fa-1x text-success"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box-open fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Courier on way
+                            </div>
+                            <i class="fas fa-check-circle fa-1x text-success"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-shipping-fast fa-2x text-success"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            @*<i class="fas fa-arrow-right fa-1x text-success" style="position:absolute;right:-8px; top:45px;"></i>*@
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-light shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-gray-300 text-uppercase mb-1">
+                                Waiting to receive
+                            </div>
+                            <i class="fas fa-spinner fa-1x text-gray-300"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-hand-holding fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-light shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-gray-300 text-uppercase mb-1">
+                                Parcel received
+                            </div>
+                            <i class="fas fa-spinner fa-1x text-gray-300"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-hand-holding-medical fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-10 m-auto">
+            <ul class="experiences mt-4">
+
+                <!-- Experience -->
+
+                <li class="green">
+                    <div class="where">December 21 2022 10:51</div>
+                    <h5>Out for Delivery</h5>
+                    <p>
+                        LEX PH will attempt to deliver your parcel today! Please keep your lines open so our courier can contact you. If you are not available, please have an authorized representative to receive on your behalf. Prepare the exact amount for COD orders.
+                    </p>
+
+                </li>
+                <li class="green">
+                    <div class="where">December 21 2022 07:51</div>
+                    <h5>Arrived at Logistics Hub</h5>
+                    <p>
+                    
+                        Your package has arrived at the local hub of LEX PH in your area.
+                    </p>
+
+                </li>
+                <li class="green">
+                    <div class="where">December 21 2022 07:51</div>
+                    <h5>Departed from Sort Center</h5>
+                    <p>
+
+                        Your package has departed the sortation center.
+                    </p>
+                    
+
+                    
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+

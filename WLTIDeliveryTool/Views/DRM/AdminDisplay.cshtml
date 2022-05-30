@@ -1,0 +1,361 @@
+﻿
+@model WLTIDeliveryTool.ViewModel.AdminDisplayDrmViewModel
+@using WLTIDeliveryTool.Helper
+@using System.Globalization
+@{
+    ViewBag.Title = "create";
+    Layout = "~/Views/Shared/_sbadmin.cshtml";
+
+
+}
+@section style{
+    <link href="~/Content/date-time-picker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <style>
+
+        .field-validation-error {
+            color: red !important;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .input-validation-error {
+            border: solid 1px #d1d3e2 !important;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        table > thead > tr > th:not(:last-child) {
+            width: 500px;
+        }
+
+        table > thead > tr > th:last-child {
+            width: 70px;
+        }
+    </style>
+}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dispatch Requisition</h1>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <div class="btn-group float-right">
+                        <a href="/drm/updatedrm?f=@Request["f"]" class="btn btn-sm btn-primary float-right"><i class="fa fa-pen text-white"></i></a>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-md-3 col-xs-12">
+                            <label>DR#</label>
+                            @Html.TextBoxFor(m => m.Details.DrNumber, null, new { @class = "form-control", @placeholder = "Enter DR number", disabled = true })
+
+
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <label>WayBill#</label>
+                            @Html.TextBoxFor(m => m.Details.WayBillNo, null, new { @class = "form-control", @placeholder = "Enter DR number", disabled = true })
+
+
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <label>Quantity of Parcel/Box</label>
+                            @Html.TextBoxFor(m => m.Details.QuantityOfParcel, null, new { @class = "form-control", disabled = true })
+
+
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <label>Date</label>
+                            @Html.TextBoxFor(m => m.Details.DrmDate, "{0:MMM-dd-yyyy}", new { @class = "form-control", disabled = true })
+
+
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-xs-12">
+                            <label>Client Name</label>
+                            @Html.TextBoxFor(m => m.Details.ClientName, null, new { @class = "form-control", disabled = true })
+
+
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <label>Requested By</label>
+                            @Html.TextBoxFor(m => m.Details.RequestedBy, null, new { @class = "form-control", disabled = true })
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4 col-xs-12">
+                            <label>Mode of Delivery</label>
+                            @Html.DropDownListFor(m => m.Details.ModId, SelectListHelper.ModeOfDelivery(), new { @class = "form-control custom-select", disabled = true })
+
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <label>Courier</label>
+                            @Html.DropDownListFor(m => m.Details.DeliveryOption, SelectListHelper.DeliveryOption(Model.Details.ModId), new { @class = "form-control custom-select", disabled = true })
+
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <label>Estimated delivery time</label>
+                            @Html.TextBoxFor(m => m.Details.Edt, null, new { @class = "form-control", disabled = true })
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-xs-12">
+                            <label>Released</label>
+                            @Html.TextBoxFor(m => m.Details.ConfirmedShipment, null, new { @class = "form-control", disabled = true })
+
+                        </div>
+
+                        <div class="col-md-6 col-xs-12 ">
+                            <label>Received</label>
+                            @Html.TextBoxFor(m => m.Details.Releasing, null, new { @class = "form-control", disabled = true })
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header">
+                    <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modalProgress"><i class="fa fa-plus text-white"></i></button>
+                </div>
+
+
+
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="table  table-responsive">
+                        <table id="tblProgress" class="dataTable display-compact table-responsive table-bordered" cellspacing="0" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Progress</th>
+                                    <th></th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>Progress</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header">
+                    <button class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#modalAddAttachment"><i class="fa fa-upload text-white"></i></button>
+                </div>
+                <div class="card-body">
+                    <div class="table  table-responsive">
+                        <table id="tblAttachment" class="table display-compact table-responsive table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>FileName</th>
+                                    <th>Uploaded Image</th>
+                                    <th>Type</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>FileName</td>
+                                    <td>Uploaded Image</td>
+                                    <td>Type</td>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="modalUpdateProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Progress</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" id="frmUpdateProgress" method="post" action="">
+
+                    <div class="row mb-2">
+
+                        <div class="col-md-12 col-xs-12">
+                            <label>Date</label>
+                            @Html.EditorFor(m => m.Progress.ProgressDate, "{0:MM/dd/yyyy}", new { @htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(m => m.Progress.ProgressDate, null, new { @style = "color:red;" })
+
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+
+                            <label>Progress</label>
+                            @Html.DropDownListFor(m => m.Progress.ProgressId, SelectListHelper.DeliveryProgress(), new { @class = "form-control custom-select" })
+                            @Html.ValidationMessageFor(m => m.Progress.ProgressId, null, new { @style = "color:red;" })
+
+                        </div>
+                        @Html.HiddenFor(m => m.Progress.Id)
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSaveUpdateProgress" onclick="SaveUpdateProgress()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+                <a style="padding:5px 30px 5px 10px;" href="/admin/incident/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddAttachment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" id="frmAddAttachment" method="post" action="">
+
+                    <div class="row mb-2">
+
+                        <div class="preview-container m-auto" style="margin-bottom:40px !important;">
+                            <center><img src="" style="padding:5px; max-height:250px;max-width:250px;" class="image-container mb-5" /></center>
+                        </div>
+                        @Html.TextBoxFor(m => m.Attachment.Attachment, new { @type = "file", @class = "form-control-file border" })
+
+                        @Html.ValidationMessageFor(m => m.Attachment.Attachment, null)<br />
+                        @Html.TextBoxFor(m => m.Attachment.FileName, null,new { @style="visibility:hidden;position:absolute;"})
+                        @Html.ValidationMessageFor(m => m.Attachment.FileName, null)<br />
+
+
+                        <center><span id="file-type-validation" style="color:red;"></span></center>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSaveAttachment" onclick="submit()" style="padding:5px 30px 5px 10px;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-fw fa-save text-white-50" data-save-btn=""> </i>&nbsp; &nbsp; Save</button>
+                <a style="padding:5px 30px 5px 10px;" href="/admin/incident/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalUpdateAttachment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelFileName"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" id="frmUpdateAttachment" method="post" action="">
+
+                    <div class="row mb-2">
+
+                        <div class="display-image m-auto" style="margin-bottom:40px !important;">
+                           
+                        </div>
+
+                        <center><span id="file-type-validation" style="color:red;"></span></center>
+                        @Html.HiddenFor(m => m.Attachment.F)
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteAttachment" onclick="ConfirmDelete()" disabled="true" style="padding:5px 30px 5px 10px;display:none !important;" class=" btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-trash text-dark" data-save-btn=""> </i>&nbsp; &nbsp; Delete</button>
+                @*<a style="padding:5px 30px 5px 10px;" href="/admin/incident/index" class="d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"><i class="fas fa-fw fa-arrow-left text-gray-500"> </i>&nbsp; &nbsp; Back</a>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_CreateProgress", Model)
+@Html.Partial("_DeleteProgress", Model)
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/date-time-picker/src/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Content/sb-admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/sb-admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="~/Scripts/date-utilities.js"></script>
+    <script src="~/Scripts/button-loader.js"></script>
+    <script src="~/Scripts/Drm/progress.js"></script>
+    <script src="~/Scripts/Drm/attachment.js"></script>
+
+    <script>
+        let drmId = '@Request["f"]';
+        
+        $(document).ready(function () {
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+}
